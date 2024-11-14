@@ -3,15 +3,16 @@ from dotenv import find_dotenv, load_dotenv
 from openai import OpenAI
 import requests
 
+# Download the file
 response = requests.get("https://cdn.oxido.pl/hr/Zadanie%20dla%20JJunior%20AI%20Developera%20-%20tresc%20artykulu.txt")
 
-
+# Get api key
 dotenv_path = find_dotenv()
 load_dotenv(dotenv_path)
 API_KEY = os.getenv("OPENAI_API_KEY")
 
 client = OpenAI()
-
+# Api request
 ai=client.chat.completions.create(
     model="gpt-4o",
     messages=[
@@ -20,8 +21,8 @@ ai=client.chat.completions.create(
     ]
 )
 
-print(ai.choices[0].message.content)
 
+# Save to html file
 Func =open("artykul.html", "w",encoding="utf-8")
 Func.write(ai.choices[0].message.content)
 Func.close()
